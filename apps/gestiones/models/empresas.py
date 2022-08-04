@@ -1,12 +1,11 @@
 from django.db import models
-from smart_selects.db_fields import ChainedForeignKey
 
 from apps.core.models import Audit
 from apps.core.validators import telefono_regex
-from apps.geolocalizaciones.models import Pais, Estado, Ciudad
+from apps.geolocalizaciones.comportamientos import Geolocalizable
 
 # Create your models here.
-class Empresa(Audit):
+class Empresa(Audit, Geolocalizable):
     administrador = models.ForeignKey(
         'usuarios.Usuario',
         null=True,
@@ -46,28 +45,6 @@ class Empresa(Audit):
     sitio_web = models.URLField(
         max_length=200,
         verbose_name='Sitio web'
-    )
-    pais = models.ForeignKey(
-        Pais,
-        verbose_name='País',
-        related_name='empresas_pais',
-        on_delete=models.PROTECT
-    )
-    estado = ChainedForeignKey(
-        Estado,
-        chained_field="pais",
-        chained_model_field="pais",
-        show_all=False,
-        auto_choose=True,
-        sort=True
-    )
-    ciudad = ChainedForeignKey(
-        Ciudad,
-        chained_field="estado",
-        chained_model_field="estado",
-        show_all=False,
-        auto_choose=True,
-        sort=True
     )
 
     class Meta:
