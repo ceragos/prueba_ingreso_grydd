@@ -5,6 +5,7 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 
 from apps.core.validators import telefono_regex
 from apps.geolocalizaciones.comportamientos import Geolocalizable
+from apps.gestiones.models import Empresa
 
 
 class Usuario(AbstractUser, Geolocalizable):
@@ -31,6 +32,18 @@ class Usuario(AbstractUser, Geolocalizable):
     telefono = models.CharField(
         max_length=17,
         validators=[telefono_regex]
+    )
+    direccion = models.CharField(
+        max_length=80,
+        verbose_name='Dirección'
+    )
+    empresa = models.ForeignKey(
+        Empresa,
+        null=True,
+        blank=False,
+        verbose_name='Empresa',
+        related_name='empleados_empresa',
+        on_delete=models.PROTECT
     )
 
     USERNAME_FIELD = 'email'

@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'smart_selects',
+    'geolocation_fields',
     'apps.usuarios',
     'apps.core',
     'apps.gestiones',
@@ -123,3 +124,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 USE_DJANGO_JQUERY = True
+
+GEOLOCATION_FIELDS = {
+    'display_input': True, # Display the input field. False to remove
+}
