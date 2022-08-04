@@ -34,8 +34,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'smart_selects',
     'apps.usuarios',
     'apps.core',
+    'apps.gestiones',
+    'apps.geolocalizaciones',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +121,5 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+USE_DJANGO_JQUERY = True
