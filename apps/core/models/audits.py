@@ -5,7 +5,6 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from apps.core.models import BaseModel
-from apps.usuarios.models import Usuario
 
 
 class Audit(BaseModel):
@@ -16,17 +15,17 @@ class Audit(BaseModel):
     is_active = models.BooleanField(default=True, verbose_name=_('activo'))
     removed = models.BooleanField(default=False, verbose_name=_('eliminado'))
     # Auditoria de creación
-    created_by = models.ForeignKey(Usuario, null=True, blank=True, verbose_name='creado por',
+    created_by = models.ForeignKey('usuarios.Usuario', null=True, blank=True, verbose_name='creado por',
                                    related_name='%(class)s_created_by', on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True, verbose_name=_('fecha de creación'))
     creation_ip = models.GenericIPAddressField(null=True, blank=True, verbose_name=_('ip de creación'))
     # Auditoria de modificación
-    modified_by = models.ForeignKey(Usuario, null=True, blank=True, verbose_name=_('modificado por'),
+    modified_by = models.ForeignKey('usuarios.Usuario', null=True, blank=True, verbose_name=_('modificado por'),
                                     related_name='%(class)s_modified_by', on_delete=models.CASCADE)
     modification_date = models.DateTimeField(null=True, blank=True, verbose_name=_('fecha de modificación'))
     modification_ip = models.GenericIPAddressField(null=True, blank=True, verbose_name=_('ip de modificación'))
     # Auditoria de borrado
-    removed_by = models.ForeignKey(Usuario, null=True, blank=True, verbose_name='eliminado por',
+    removed_by = models.ForeignKey('usuarios.Usuario', null=True, blank=True, verbose_name='eliminado por',
                                    related_name='%(class)s_removed_by', on_delete=models.CASCADE)
     elimination_date = models.DateTimeField(null=True, blank=True, verbose_name=_('fecha de eliminación'))
     elimination_ip = models.GenericIPAddressField(null=True, blank=True, verbose_name=_('ip de eliminación'))

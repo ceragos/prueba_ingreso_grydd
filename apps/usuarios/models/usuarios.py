@@ -4,9 +4,10 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.validators import UnicodeUsernameValidator
 
 from apps.core.validators import telefono_regex
+from apps.geolocalizaciones.comportamientos import Geolocalizable
 
 
-class Usuario(AbstractUser):
+class Usuario(AbstractUser, Geolocalizable):
     email = models.EmailField(
         _('email address'),
         unique=True,
