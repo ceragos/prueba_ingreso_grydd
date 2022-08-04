@@ -42,13 +42,27 @@
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item {% if request.path|slice:":9" == '/gestiones/' %}active{% endif %}">
-            <a class="nav-link" href="{% url 'gestiones:empresas.listar' %}">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Empresas</span>
+        <li class="nav-item {% if request.path|slice:":11" == '/gestiones/' %}active{% endif %}">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+               aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Gestiones</span>
             </a>
+            <div id="collapseTwo" class="collapse {% if request.path|slice:":11" == '/gestiones/' %}show{% endif %}"
+                 aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item {% if request.path|slice:":20" == '/gestiones/empresas/' %}active{% endif %}"
+                        href="{% url 'gestiones:empresas.listar' %}">
+                        Empresas
+                    </a>
+                    <a class="collapse-item {% if request.path|slice:":17" == '/gestiones/sedes/' %}active{% endif %}"
+                        href="{% url 'gestiones:sedes.listar' %}">
+                        Puntos de acceso
+                    </a>
+                </div>
+            </div>
         </li>
-        <li class="nav-item {% if request.path|slice:":12" == '/components/' %}active{% endif %}">
+        <li class="nav-item {% if request.path|slice:":10" == '/usuarios/' %}active{% endif %}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
