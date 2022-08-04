@@ -32,6 +32,14 @@ class PuntoAcceso(Audit):
     )
     horarios_acceso = models.ManyToManyField(
         'gestiones.FranjaHoraria',
+        blank=True,
         verbose_name='Horarios de acceso',
         related_name='sedes_franja'
     )
+
+    class Meta:
+        verbose_name = 'Punto de acceso'
+        verbose_name_plural = 'Puntos de acceso'
+
+    def __str__(self):
+        return f'{self.empresa} - {self.nombre}'

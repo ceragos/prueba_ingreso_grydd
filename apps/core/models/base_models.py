@@ -23,7 +23,7 @@ class BaseModel(models.Model):
                 # Elimina los espacios en blanco que no son necesarios
                 valor = " ".join(valor.split())
                 # Cambia los caracteres a mayusculas
-                setattr(self, field, valor.capitalize())
+                setattr(self, field, valor.title())
 
 
 class ParametroBaseModel(BaseModel):

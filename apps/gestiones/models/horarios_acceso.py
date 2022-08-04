@@ -22,3 +22,11 @@ class FranjaHoraria(Audit):
         related_name='horarios_empleado',
         on_delete=models.PROTECT
     )
+    
+    class Meta:
+        verbose_name = 'Franja horaria'
+        verbose_name_plural = 'Franjas horarias'
+
+    def __str__(self):
+        empleado = f'{self.empleado.first_name} {self.empleado.last_name}'
+        return f'{empleado}, {self.punto_acceso} ({self.hora_inicio} - {self.hora_finalizacion})'
