@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'smart_selects',
     'geolocation_fields',
+    'crispy_forms',
     'apps.usuarios',
     'apps.core',
     'apps.gestiones',
@@ -97,8 +98,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'usuarios.Usuario'
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/core/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -128,3 +129,5 @@ USE_DJANGO_JQUERY = True
 GEOLOCATION_FIELDS = {
     'display_input': True, # Display the input field. False to remove
 }
+
+CRISPY_TEMPLATE_PACK = 'uni_form'

@@ -1,0 +1,145 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Lista de empresas - GRYDD{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800 d-inline">Empresas</h1>
+        {% comment %} {% if perms.bodega.add_herramienta %} {% endcomment %}
+        <a href="{% url 'gestiones:empresas.crear' %}" class="btn btn-primary btn-icon-split mb-2 ml-2">
+            <span class="icon text-white-50">
+                <i class="fas fa-plus"></i>
+            </span>
+            <span class="text">Crear</span>
+        </a>
+        {% comment %} {% endif %} {% endcomment %}
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Lista de Empresas</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>nit</th>
+                            <th>nombre</th>
+                            <th>nombre comercial</th>
+                            <th>direccion</th>
+                            <th>telefono</th>
+                            <th>email</th>
+                            <th>sitio web</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>nit</th>
+                            <th>nombre</th>
+                            <th>nombre comercial</th>
+                            <th>direccion</th>
+                            <th>telefono</th>
+                            <th>email</th>
+                            <th>sitio web</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                            {% for empresa in empresas %}
+                                <tr>
+                                    <td>
+                                        {{empresa.nit}}
+                                        {% comment %} <a href={% url 'bodega:herramienta.detail' herramienta.id %}>
+                                            {{ herramienta.nombre }}
+                                        </a> {% endcomment %}
+                                    </td>
+                                    <td>{{ empresa.nombre }}</td>
+                                    <td>
+                                        {{empresa.nombre_comercial}}
+                                        {% comment %} {% if empresa.nombre_comercial %}
+                                            <i class="far fa-check-circle" style="color:green"></i>
+                                        {% else %}
+                                            <i class="far fa-times-circle" style="color:red"></i>
+                                        {% endif %} {% endcomment %}
+                                    </td>
+                                    <td>{{ empresa.direccion }}</td>
+                                    <td>{{ empresa.telefono }}</td>
+                                    <td>{{ empresa.email }}</td>
+                                    <td>{{ empresa.sitio_web }}</td>
+                                    {% comment %} <td>
+                                        {% if perms.herramienta.change_herramienta %}
+                                        <a href="{% url 'bodega:herramienta.update' herramienta.id %}"
+                                            class="btn btn-info btn-sm" title="Editar herramienta">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-edit"></i>
+                                            </span>
+                                        </a>
+                                        {% endif %}
+                                        {% if perms.herramienta.delete_herramienta %}
+                                        <a href="{% url 'bodega:herramienta.delete' herramienta.id %}"
+                                            class="btn btn-danger btn-sm" title="Eliminar herramienta">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
+                                        </a>
+                                        {% endif %}
+                                    </td> {% endcomment %}
+                                </tr>
+                            {% empty %}
+                                <td colspan='7'>No hay empresas registradas</td>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-5">
+                <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
+                    Pagina {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-7">
+                <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                    <ul class="pagination">
+                        <li class="paginate_button page-item previous {% if not page_obj.has_previous %}disabled{% endif %}" id="dataTable_previous">
+                            <a href="?page=1" aria-controls="dataTable" tabindex="0" class="page-link">Primera</a>
+                        </li>
+
+                        <li class="paginate_button page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+                            <a href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% else %}#{% endif %}" aria-controls="dataTable" tabindex="0" class="page-link">Anterior</a>
+                        </li>
+
+                        {% for i in paginator.page_range %}
+                            <li class="paginate_button page-item {% if page_obj.number == i %}active{% endif %}">
+                                <a href="?page={{i}}" aria-controls="dataTable" tabindex="0" class="page-link">{{ i }}</a>
+                            </li>
+                        {% endfor %}
+                        
+                        <li class="paginate_button page-item {% if not page_obj.has_next %}disabled{% endif %}">
+                            <a href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% else %}#{% endif %}" aria-controls="dataTable" tabindex="0" class="page-link">Siguiente</a>
+                        </li>
+
+                        <li class="paginate_button page-item next {% if not page_obj.has_next %}disabled{% endif %}" id="dataTable_next">
+                            <a href="{% if page_obj.has_next %}?page={{ page_obj.paginator.num_pages }}{% else %}#{% endif %}" aria-controls="dataTable" tabindex="0" class="page-link">Ultima</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block js %}
+    <!-- Page level plugins -->
+    <script src="{% static 'core/assets/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'core/assets/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{% static 'core/assets/js/demo/datatables-demo.js' %}"></script>
+    <script src="{% static 'core/assets/js/datatables.js' %}"></script>
+{% endblock %}

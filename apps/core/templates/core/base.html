@@ -35,18 +35,17 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">ERP Admin</div>
+            <div class="sidebar-brand-text mx-3">GRYDD Admin</div>
         </a>
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item {% if request.path|slice:":16" == '/talento_humano/' %}active{% endif %}">
-            {% comment %} <a class="nav-link" href="{% url 'talento_humano:empleado.list' %}"> {% endcomment %}
-            <a class="nav-link" href="#">
+        <li class="nav-item {% if request.path|slice:":9" == '/gestiones/' %}active{% endif %}">
+            <a class="nav-link" href="{% url 'gestiones:empresas.listar' %}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Talento humano</span>
+                <span>Empresas</span>
             </a>
         </li>
 
