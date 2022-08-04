@@ -1,8 +1,9 @@
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.validators import UnicodeUsernameValidator
+
+from apps.core.validators import telefono_regex
 
 
 class Usuario(AbstractUser):
@@ -26,11 +27,10 @@ class Usuario(AbstractUser):
             'unique': _("A user with that username already exists."),
         },
     )
-    telefono_regex = RegexValidator(
-        regex=r'\+?2?\d{9,15}$',
-        message="El número de teléfono debe ingresarse en el formato: +999999999999. Se permiten hasta 15 dígitos."
+    telefono = models.CharField(
+        max_length=17,
+        validators=[telefono_regex]
     )
-    telefono = models.CharField(validators=[telefono_regex], max_length=17, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
