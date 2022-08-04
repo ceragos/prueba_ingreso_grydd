@@ -16,9 +16,13 @@ Including another URLconf
 from django.contrib.auth.decorators import login_required
 from django.urls import path
 
-from apps.gestiones.views import EmpresaCreateView, EmpresaListView
+from apps.usuarios.views import UsuarioAdministradorListView, UsuarioAdministradorCreateView, UsuarioEmpleadoListView, \
+    UsuarioEmpleadoCreateView
 
 urlpatterns = [
-    path('empresas/listar/', login_required(EmpresaListView.as_view()), name='empresas.listar'),
-    path('empresas/crear/', login_required(EmpresaCreateView.as_view()), name='empresas.crear'),
+    path('administradores/listar/', login_required(UsuarioAdministradorListView.as_view()), name='administradores.listar'),
+    path('administradores/crear/', login_required(UsuarioAdministradorCreateView.as_view()), name='administradores.crear'),
+
+    path('empleados/listar/', login_required(UsuarioEmpleadoListView.as_view()), name='empleados.listar'),
+    path('empleados/crear/', login_required(UsuarioEmpleadoCreateView.as_view()), name='empleados.crear'),
 ]

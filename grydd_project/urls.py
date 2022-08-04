@@ -22,6 +22,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('core/', include(('apps.core.urls', 'apps.core'), namespace='core')),
     path('gestiones/', include(('apps.gestiones.urls', 'apps.gestiones'), namespace='gestiones')),
+    path('usuarios/', include(('apps.usuarios.urls', 'apps.usuarios'), namespace='usuarios')),
     path('chaining/', include('smart_selects.urls')),
 ]
 
