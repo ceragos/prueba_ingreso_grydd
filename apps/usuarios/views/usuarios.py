@@ -45,10 +45,13 @@ class UsuarioAdministradorCreateView(CreateView):
     def form_valid(self, form):
         """If the form is valid, save the associated model."""
         self.object = form.save()
+
+        # Si el usuario es creado desde la sección de empresas se agrega update_fiels para
+        # ejecutar la validacion del signal postsave que realiza la invitación por correo electronico
         empresa = self.get_empresa()
         if empresa:
             empresa.administrador = self.object
-            update_fields= ['administrador']
+            update_fields = ['administrador']
             empresa.save(update_fields=update_fields)
         return super().form_valid(form)
 

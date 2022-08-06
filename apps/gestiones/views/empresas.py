@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from django.views.generic.list import ListView
 
 from apps.gestiones.models import Empresa
@@ -19,3 +19,20 @@ class EmpresaCreateView(CreateView):
     form_class = EmpresaForm
     template_name = 'gestiones/empresas/crear.html'
     success_url = reverse_lazy('gestiones:empresas.listar')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['accion'] = 'Crear'
+        return context
+
+
+class EmpresaUpdateView(UpdateView):
+    model = Empresa
+    form_class = EmpresaForm
+    template_name = 'gestiones/empresas/crear.html'
+    success_url = reverse_lazy('gestiones:empresas.listar')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['accion'] = 'Editar'
+        return context

@@ -16,12 +16,14 @@ Including another URLconf
 from django.contrib.auth.decorators import login_required
 from django.urls import path
 
-from apps.gestiones.views import EmpresaCreateView, EmpresaListView, PuntoAccesoCreateView, PuntoAccesoListView
+from apps.gestiones.views import EmpresaCreateView, EmpresaListView, PuntoAccesoCreateView, PuntoAccesoListView, EmpresaUpdateView, PuntoAccesoUpdateView
 
 urlpatterns = [
     path('empresas/listar/', login_required(EmpresaListView.as_view()), name='empresas.listar'),
     path('empresas/crear/', login_required(EmpresaCreateView.as_view()), name='empresas.crear'),
+    path('empresas/editar/<int:pk>/', login_required(EmpresaUpdateView.as_view()), name='empresas.editar'),
 
     path('sedes/listar/', login_required(PuntoAccesoListView.as_view()), name='sedes.listar'),
     path('sedes/crear/', login_required(PuntoAccesoCreateView.as_view()), name='sedes.crear'),
+    path('sedes/editar/<int:pk>/', login_required(PuntoAccesoUpdateView.as_view()), name='sedes.editar'),
 ]

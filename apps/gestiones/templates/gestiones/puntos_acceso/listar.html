@@ -32,7 +32,7 @@
                             <th>Email</th>
                             <th>Empresa</th>
                             <th>Geolocalizacion</th>
-                            <th>Horarios acceso</th>
+                            <th>Opciones</th>
                         </tr>
                         </thead>
                         <tfoot>
@@ -42,7 +42,7 @@
                             <th>Email</th>
                             <th>Empresa</th>
                             <th>Geolocalizacion</th>
-                            <th>Horarios acceso</th>
+                            <th>Opciones</th>
                         </tr>
                         </tfoot>
                         <tbody>
@@ -65,25 +65,14 @@
                                     </td>
                                     <td>{{ punto_acceso.empresa }}</td>
                                     <td>{{ punto_acceso.geolocalizacion }}</td>
-                                    <td>{{ punto_acceso.horarios_acceso }}</td>
-                                    {% comment %} <td>
-                                        {% if perms.herramienta.change_herramienta %}
-                                        <a href="{% url 'bodega:herramienta.update' herramienta.id %}"
+                                    <td>
+                                        <a href="{% url 'gestiones:sedes.editar' punto_acceso.id %}"
                                             class="btn btn-info btn-sm" title="Editar herramienta">
                                             <span class="icon text-white-50">
                                                 <i class="fas fa-edit"></i>
                                             </span>
                                         </a>
-                                        {% endif %}
-                                        {% if perms.herramienta.delete_herramienta %}
-                                        <a href="{% url 'bodega:herramienta.delete' herramienta.id %}"
-                                            class="btn btn-danger btn-sm" title="Eliminar herramienta">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-trash"></i>
-                                            </span>
-                                        </a>
-                                        {% endif %}
-                                    </td> {% endcomment %}
+                                    </td>
                                 </tr>
                             {% empty %}
                                 <td colspan='6'>No hay puntos de acceso registrados</td>

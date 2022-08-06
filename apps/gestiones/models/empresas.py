@@ -22,7 +22,7 @@ class Empresa(Geolocalizable, Audit):
         'usuarios.Usuario',
         null=True,
         blank=True,
-        verbose_name='Usuario',
+        verbose_name='Administrador',
         related_name='empresas_administradas',
         on_delete=models.PROTECT
     )

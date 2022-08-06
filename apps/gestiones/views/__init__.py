@@ -1,2 +1,2 @@
-from .empresas import EmpresaCreateView, EmpresaListView
-from .sedes import PuntoAccesoCreateView, PuntoAccesoListView
+from .empresas import EmpresaCreateView, EmpresaListView, EmpresaUpdateView
+from .sedes import PuntoAccesoCreateView, PuntoAccesoListView, PuntoAccesoUpdateView

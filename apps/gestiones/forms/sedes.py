@@ -25,7 +25,7 @@ class PuntoAccesoForm(forms.ModelForm):
         self.helper.form_method = 'post'
         # self.helper.form_action = 'submit_survey'
 
-        self.helper.add_input(Submit('submit', 'Submit', css_class='btn btn-primary'))
+        self.helper.add_input(Submit('submit', 'Enviar', css_class='btn btn-primary mt-4'))
 
         self.fields['nombre'].widget.attrs['class'] = 'form-control form-control-solid'
         self.fields['direccion'].widget.attrs['class'] = 'form-control form-control-solid'
