@@ -27,24 +27,20 @@
                     <table class="table table-bordered" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th>nit</th>
-                            <th>nombre</th>
-                            <th>nombre comercial</th>
-                            <th>direccion</th>
-                            <th>telefono</th>
-                            <th>email</th>
-                            <th>sitio web</th>
+                            <th>Nit</th>
+                            <th>Nombre</th>
+                            <th>Nombre comercial</th>
+                            <th>Administrador</th>
+                            <th>Opciones</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>nit</th>
-                            <th>nombre</th>
-                            <th>nombre comercial</th>
-                            <th>direccion</th>
-                            <th>telefono</th>
-                            <th>email</th>
-                            <th>sitio web</th>
+                            <th>Nit</th>
+                            <th>Nombre</th>
+                            <th>Nombre comercial</th>
+                            <th>Administrador</th>
+                            <th>Opciones</th>
                         </tr>
                         </tfoot>
                         <tbody>
@@ -65,31 +61,28 @@
                                             <i class="far fa-times-circle" style="color:red"></i>
                                         {% endif %} {% endcomment %}
                                     </td>
-                                    <td>{{ empresa.direccion }}</td>
-                                    <td>{{ empresa.telefono }}</td>
-                                    <td>{{ empresa.email }}</td>
-                                    <td>{{ empresa.sitio_web }}</td>
-                                    {% comment %} <td>
-                                        {% if perms.herramienta.change_herramienta %}
-                                        <a href="{% url 'bodega:herramienta.update' herramienta.id %}"
+                                    <td>
+                                        {{ empresa.administrador|default:"" }}
+                                        {% if not empresa.administrador %}
+                                        <a href="{% url 'usuarios:empresa.administradores.crear' empresa.id %}"
+                                            class="btn btn-success btn-sm" title="Crear administrador">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-user"></i>
+                                            </span>
+                                        </a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="#"
                                             class="btn btn-info btn-sm" title="Editar herramienta">
                                             <span class="icon text-white-50">
                                                 <i class="fas fa-edit"></i>
                                             </span>
                                         </a>
-                                        {% endif %}
-                                        {% if perms.herramienta.delete_herramienta %}
-                                        <a href="{% url 'bodega:herramienta.delete' herramienta.id %}"
-                                            class="btn btn-danger btn-sm" title="Eliminar herramienta">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-trash"></i>
-                                            </span>
-                                        </a>
-                                        {% endif %}
-                                    </td> {% endcomment %}
+                                    </td>
                                 </tr>
                             {% empty %}
-                                <td colspan='7'>No hay empresas registradas</td>
+                                <td colspan='5'>No hay empresas registradas</td>
                             {% endfor %}
                         </tbody>
                     </table>

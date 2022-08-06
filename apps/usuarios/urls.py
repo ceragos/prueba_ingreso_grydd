@@ -17,11 +17,21 @@ from django.contrib.auth.decorators import login_required
 from django.urls import path
 
 from apps.usuarios.views import UsuarioAdministradorListView, UsuarioAdministradorCreateView, UsuarioEmpleadoListView, \
-    UsuarioEmpleadoCreateView
+    UsuarioEmpleadoCreateView, ValidarInvitacionRedirectView, InvitacionInvalidaTemplateView, EstablecerContrasenaFormView
 
 urlpatterns = [
+    path('usuario/establecer_contrasena/<str:email>/', EstablecerContrasenaFormView.as_view(), name='usuario.establecer_contrasena'),
+
     path('administradores/listar/', login_required(UsuarioAdministradorListView.as_view()), name='administradores.listar'),
     path('administradores/crear/', login_required(UsuarioAdministradorCreateView.as_view()), name='administradores.crear'),
+    path('administradores/crear/<int:pk_empresa>/', login_required(UsuarioAdministradorCreateView.as_view()), name='empresa.administradores.crear'),
+    path(
+        'administradores/validar_invitacion/<str:token>/',
+        login_required(ValidarInvitacionRedirectView.as_view()),
+        name='administradores.validar_invitacion'
+    ),
+
+    path('administradores/invitacion_invalida/', InvitacionInvalidaTemplateView.as_view(), name='administradores.invitacion_invalida'),
 
     path('empleados/listar/', login_required(UsuarioEmpleadoListView.as_view()), name='empleados.listar'),
     path('empleados/crear/', login_required(UsuarioEmpleadoCreateView.as_view()), name='empleados.crear'),

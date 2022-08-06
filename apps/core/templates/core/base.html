@@ -42,23 +42,29 @@
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
+        {% if request.user.is_superuser or request.user.is_staff %}
         <li class="nav-item {% if request.path|slice:":11" == '/gestiones/' %}active{% endif %}">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-               aria-expanded="true" aria-controls="collapseTwo">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
+               aria-expanded="true" aria-controls="collapseOne">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Gestiones</span>
             </a>
-            <div id="collapseTwo" class="collapse {% if request.path|slice:":11" == '/gestiones/' %}show{% endif %}"
-                 aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div id="collapseOne" class="collapse {% if request.path|slice:":11" == '/gestiones/' %}show{% endif %}"
+                 aria-labelledby="headingOne" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
+                    {% if request.user.is_superuser %}
                     <a class="collapse-item {% if request.path|slice:":20" == '/gestiones/empresas/' %}active{% endif %}"
                         href="{% url 'gestiones:empresas.listar' %}">
                         Empresas
                     </a>
+                    {% endif %}
+                    
+                    {% if request.user.is_staff %}
                     <a class="collapse-item {% if request.path|slice:":17" == '/gestiones/sedes/' %}active{% endif %}"
                         href="{% url 'gestiones:sedes.listar' %}">
                         Puntos de acceso
                     </a>
+                    {% endif %}
                 </div>
             </div>
         </li>
@@ -71,17 +77,23 @@
             <div id="collapseTwo" class="collapse {% if request.path|slice:":10" == '/usuarios/' %}show{% endif %}"
                  aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
+                    {% if request.user.is_superuser %}
                     <a class="collapse-item {% if request.path|slice:":26" == '/usuarios/administradores/' %}active{% endif %}"
                        href="{% url 'usuarios:administradores.listar' %}">
                         Administradores
                     </a>
+                    {% endif %}
+
+                    {% if request.user.is_staff %}
                     <a class="collapse-item {% if request.path|slice:":20" == '/usuarios/empleados/' %}active{% endif %}"
                        href="{% url 'usuarios:empleados.listar' %}">
                         Empleados
                     </a>
+                    {% endif %}
                 </div>
             </div>
         </li>
+        {% endif %}
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">

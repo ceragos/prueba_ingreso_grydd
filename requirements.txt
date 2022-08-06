@@ -13,3 +13,4 @@ python-decouple==3.3
 django-smart-selects==1.6.0
 django-geolocation-fields==0.1.8
 django-crispy-forms==1.14.0
+PyJWT==2.4.0

@@ -353,8 +353,10 @@
                     </tr>
                     <tr>
                       <td>
-                        <p>Hola Jesús</p>
-                        <p>Por motivos de seguridad, debe escribir el código siguiente para comprobar su cuenta y podamos actualizar su informacion. El código solo funcionará durante 15 minutos y si se solicita un nuevo código, este código dejará de funcionar.</p>
+                        <p>Hola {{ nombre }}</p>
+                        <p>
+                          Reciba una cordial bienvenida a nuestra empresa {{ nombre_empresa }} es un gusto para nosotros tenerlo en nuestro equipo.
+                        </p>
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                           <tbody>
                             <tr>
@@ -363,12 +365,12 @@
                                   <tbody>
                                     <tr>
                                       <td style="border-collapse:collapse;margin:0;padding:8px 16px 0px 16px;color:#333333;font-family:'Segoe UI',Arial,sans-serif;font-size:14px" bgcolor="#FFF4CE">
-                                        Código de verificación de cuenta:
+                                        Haga clic en el siguiente enlace para verificar su cuenta:
                                       </td>
                                     </tr>
                                     <tr>
                                       <td style="border-collapse:collapse;margin:0;padding:0px 16px 8px 16px;color:#333333;font-family:'Segoe UI',Arial,sans-serif;font-size:18px" bgcolor="#FFF4CE">
-                                        <strong>123456</strong>
+                                        <a href="{{ enlace }}">Aceptar invitación</a>
                                       </td>
                                     </tr>
                                   </tbody>
@@ -378,8 +380,8 @@
                           </tbody>
                         </table>
                         <br></br>
-                        <strong>¿Hay problemas con el código?</strong>
-                        <p>Si es así, busque un correo electrónico actualizado o intente solicitar un nuevo código.</p>
+                        <strong>¿Hay problemas con el enlace?</strong>
+                        <p>Si es así, comuniquese con el administrador de la empresa.</p>
                       </td>
                     </tr>
                   </table>
@@ -394,7 +396,7 @@
               <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td class="content-block powered-by">
-                    Powered by <a href="http://www.ospedale.com.co/">Grupo Ospedale</a>.
+                    Powered by <a href="http://www.grydd.com.co/">Grydd</a>.
                   </td>
                 </tr>
               </table>

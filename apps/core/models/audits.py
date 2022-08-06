@@ -51,9 +51,9 @@ class Audit(BaseModel):
 
         super(Audit, self).save(*args, **kwargs)
 
-    def delete(self, *args, **kwargs):
-        self.removed_by = get_current_user()
-        self.elimination_date = datetime.now()
-        self.elimination_ip = get_current_request().META['REMOTE_ADDR']
-        self.removed = True
-        self.save()
+    # def delete(self, *args, **kwargs):
+    #     self.removed_by = get_current_user()
+    #     self.elimination_date = datetime.now()
+    #     self.elimination_ip = get_current_request().META['REMOTE_ADDR']
+    #     self.removed = True
+    #     self.save()

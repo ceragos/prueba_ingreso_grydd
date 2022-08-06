@@ -1,1 +1,1 @@
-from .usuarios import UsuarioAdministradorForm, UsuarioForm
+from .usuarios import UsuarioAdministradorForm, UsuarioForm, EstablecerContrasenaFrom
