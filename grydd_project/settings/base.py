@@ -130,7 +130,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 USE_DJANGO_JQUERY = True
 
 GEOLOCATION_FIELDS = {
-    'display_input': True, # Display the input field. False to remove
+    "provider": "mapbox", # Two provider: Leaflet, Mapbox
+    "center" : [4.65344884308062, -74.08366441726686],
+    "zoom": 10,
+    'display_input': False,
 }
+
 
 CRISPY_TEMPLATE_PACK = 'uni_form'

@@ -1,6 +1,6 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-from crum import get_current_user
+from crum import get_current_user, get_current_request
 from django import forms
 
 from apps.gestiones.models import PuntoAcceso, FranjaHoraria
@@ -40,3 +40,9 @@ class PuntoAccesoForm(forms.ModelForm):
         if not current_user.is_superuser:
             self.initial['empresa'] = current_user.empresa
             self.fields['empresa'].widget = forms.HiddenInput()
+        self.get_geolocalizacion()
+
+    def get_geolocalizacion(self):
+        REMOTE_ADDR = get_current_request().META['REMOTE_ADDR']
+        print(REMOTE_ADDR)
+        f'http://ip-api.com/json/{REMOTE_ADDR}'
