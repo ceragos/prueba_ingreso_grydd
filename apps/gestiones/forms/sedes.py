@@ -2,11 +2,10 @@ import logging
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-from crum import get_current_user, get_current_request
+from crum import get_current_user
 from django import forms
-from ipware import get_client_ip
 
-from apps.gestiones.models import PuntoAcceso, FranjaHoraria
+from apps.gestiones.models import PuntoAcceso
 
 logger = logging.getLogger('GESTIONES')
 
@@ -46,16 +45,3 @@ class PuntoAccesoForm(forms.ModelForm):
         if not current_user.is_superuser:
             self.initial['empresa'] = current_user.empresa
             self.fields['empresa'].widget = forms.HiddenInput()
-        self.get_geolocalizacion()
-
-    def get_geolocalizacion(self):
-        request =get_current_request()
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0]
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        logger.info('request', ip)
-        ip, is_routable = get_client_ip(request)
-        logger.info('ipware', ip, is_routable)
-        f'http://ip-api.com/json/{ip}'
