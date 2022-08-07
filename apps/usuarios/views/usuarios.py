@@ -117,7 +117,8 @@ class UsuarioEmpleadoListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(is_staff=False)
+        empresa = self.request.user.empresa
+        queryset = queryset.filter(is_staff=False, empresa=empresa)
         return queryset
 
 

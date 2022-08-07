@@ -12,6 +12,12 @@ class PuntoAccesoListView(ListView):
     template_name = 'gestiones/puntos_acceso/listar.html'
     paginate_by = 10
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        empresa = self.request.user.empresa
+        queryset = queryset.filter(empresa=empresa)
+        return queryset
+
 
 class PuntoAccesoCreateView(CreateView):
     model = PuntoAcceso

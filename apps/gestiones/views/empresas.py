@@ -13,7 +13,6 @@ class EmpresaListView(ListView):
     paginate_by = 10
 
 
-
 class EmpresaCreateView(CreateView):
     model = Empresa
     form_class = EmpresaForm
