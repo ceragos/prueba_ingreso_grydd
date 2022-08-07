@@ -37,6 +37,9 @@ O también puede utilizar un intérprete de Python de su elección
 * Agrupe los archivos estaticos
 ###
     python manage.py collectstatic
+* Cargue los datos
+###
+    python manage.py loaddata data.json
 * Ejecute el servidor
 ###
     python manage.py runserver
