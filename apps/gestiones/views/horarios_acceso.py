@@ -50,3 +50,19 @@ class FranjaHorariaCreateView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('gestiones:horario_acceso.listar', args=[self.object.empleado.pk])
+
+
+class FranjaHorariaUpdateView(UpdateView):
+    model = FranjaHoraria
+    form_class = FranjaHorariaForm
+    template_name = 'gestiones/horarios_acceso/crear.html'
+    success_url = reverse_lazy('gestiones:sedes.listar')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['accion'] = 'Editar'
+        context['nombre_empleado'] = f'{self.object.empleado.first_name} {self.object.empleado.last_name}'
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('gestiones:horario_acceso.listar', args=[self.object.empleado.pk])

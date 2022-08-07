@@ -42,4 +42,4 @@ class FranjaHorariaForm(forms.ModelForm):
         self.fields['punto_acceso'].queryset = self.fields['punto_acceso'].queryset.filter(empresa=get_current_user().empresa)
         if empleado:
             self.initial['empleado'] = empleado
-            self.fields['empleado'].widget = forms.HiddenInput()
+        self.fields['empleado'].widget = forms.HiddenInput()
