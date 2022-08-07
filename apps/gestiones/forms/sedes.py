@@ -55,7 +55,7 @@ class PuntoAccesoForm(forms.ModelForm):
             ip = x_forwarded_for.split(',')[0]
         else:
             ip = request.META.get('REMOTE_ADDR')
-        logger.info('request', ip, is_routable)
+        logger.info('request', ip)
         ip, is_routable = get_client_ip(request)
         logger.info('ipware', ip, is_routable)
         f'http://ip-api.com/json/{ip}'
