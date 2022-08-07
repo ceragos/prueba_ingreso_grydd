@@ -9,7 +9,7 @@ class BaseModel(models.Model):
 
     def save(self, *args, **kwargs):
 
-        self.format_characters()
+        # self.format_characters()
 
         super(BaseModel, self).save(*args, **kwargs)
 

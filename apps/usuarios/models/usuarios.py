@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.validators import UnicodeUsernameValidator
+from phonenumber_field.modelfields import PhoneNumberField
 
 from apps.core.validators import telefono_regex
 from apps.geolocalizaciones.comportamientos import Geolocalizable
@@ -28,10 +29,7 @@ class Usuario(AbstractUser, Geolocalizable):
             'unique': _("A user with that username already exists."),
         },
     )
-    telefono = models.CharField(
-        max_length=17,
-        validators=[telefono_regex]
-    )
+    telefono = PhoneNumberField()
     direccion = models.CharField(
         max_length=80,
         verbose_name='Dirección'

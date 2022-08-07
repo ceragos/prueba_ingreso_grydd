@@ -10,6 +10,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils import timezone
 from django.urls import reverse_lazy
+from phonenumber_field.modelfields import PhoneNumberField
 
 from apps.core.models import Audit
 from apps.core.validators import telefono_regex
@@ -44,10 +45,7 @@ class Empresa(Geolocalizable, Audit):
         max_length=80,
         verbose_name='Dirección'
     )
-    telefono = models.CharField(
-        max_length=17,
-        validators=[telefono_regex]
-    )
+    telefono = PhoneNumberField()
     email = models.EmailField(
         'Correo electrónico',
         unique=True,

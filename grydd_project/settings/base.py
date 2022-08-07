@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'smart_selects',
     'geolocation_fields',
     'crispy_forms',
+    'phonenumber_field',
+    'import_export',
     'apps.usuarios',
     'apps.core',
     'apps.gestiones',
