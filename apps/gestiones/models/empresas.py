@@ -14,6 +14,7 @@ from django.urls import reverse_lazy
 from apps.core.models import Audit
 from apps.core.validators import telefono_regex
 from apps.geolocalizaciones.comportamientos import Geolocalizable
+from apps.usuarios.models.usuarios import Usuario
 
 
 # Create your models here.
@@ -99,3 +100,5 @@ def invitar_administrador(sender, **kwargs):
         email_from = settings.EMAIL_HOST_USER
         recipient_list = [f'{instance.administrador.email}']
         send_mail(asunto, mensage, email_from, recipient_list, html_message=html_message)
+    else:
+        Usuario.objects.filter(pk=instance.administrador.pk).update(empresa=instance)

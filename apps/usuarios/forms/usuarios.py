@@ -1,9 +1,16 @@
 import email
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from crum import get_current_user
 from django import forms
+from django.conf import settings
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.urls import reverse_lazy
+from django.utils.html import strip_tags
+from apps.gestiones.models.empresas import Empresa
 
 from apps.usuarios.models import Usuario
 
@@ -24,7 +31,7 @@ class UsuarioForm(forms.ModelForm):
             'ciudad'
         )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, empresa=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_id = 'id-empresaForm'
@@ -44,15 +51,12 @@ class UsuarioForm(forms.ModelForm):
         self.fields['estado'].widget.attrs['class'] = 'form-control form-control-solid'
         self.fields['ciudad'].widget.attrs['class'] = 'form-control form-control-solid'
 
+        if empresa:
+            self.initial['empresa'] = empresa
+            self.fields['empresa'].widget = forms.HiddenInput()
+
 
 class UsuarioAdministradorForm(UsuarioForm):
-
-    def __init__(self, empresa=None, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.empresa = empresa
-        if self.empresa:
-            self.initial['empresa'] = self.empresa
-            self.fields['empresa'].widget = forms.HiddenInput()
 
     def save(self, commit=True):
         instance = super(UsuarioAdministradorForm, self).save(commit=False)
@@ -122,3 +126,38 @@ class EstablecerContrasenaFrom(forms.Form):
         usuario.set_password(password)
         usuario.save()
         return usuario
+
+
+class InvitarEmpleadoFrom(forms.Form):
+    email = forms.EmailField(label='Correo electrónico')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-usuarioForm'
+        self.helper.form_class = 'container'
+        self.helper.form_method = 'post'
+        # self.helper.form_action = 'submit_survey'
+        self.helper.add_input(Submit('submit', 'Enviar', css_class='btn btn-primary mt-4'))
+
+        self.fields['email'].widget.attrs['class'] = 'form-control form-control-solid'
+
+    def is_valid(self):
+        is_valid = super().is_valid()
+        if is_valid:
+            empresa= Empresa.objects.filter(pk=get_current_user().empresa.pk).first()
+            asunto = 'Invitación de empleado'
+            ruta = reverse_lazy('usuarios:empleados.registrar', args=[empresa.pk])
+            context = {
+                'nombre_empresa': empresa.nombre_comercial,
+                'enlace': f'{settings.DOMAIN_NAME}{ruta}'
+            }
+            html_message = render_to_string(
+                'usuarios/empleados/email.html',
+                context=context
+            )
+            mensage = strip_tags(html_message)
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [f'{self.cleaned_data["email"]}']
+            send_mail(asunto, mensage, email_from, recipient_list, html_message=html_message)
+        return is_valid

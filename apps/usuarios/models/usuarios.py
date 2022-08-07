@@ -5,7 +5,6 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 
 from apps.core.validators import telefono_regex
 from apps.geolocalizaciones.comportamientos import Geolocalizable
-from apps.gestiones.models import Empresa
 
 
 class Usuario(AbstractUser, Geolocalizable):
@@ -38,7 +37,7 @@ class Usuario(AbstractUser, Geolocalizable):
         verbose_name='Dirección'
     )
     empresa = models.ForeignKey(
-        Empresa,
+        'gestiones.Empresa',
         null=True,
         blank=False,
         verbose_name='Empresa',

@@ -10,7 +10,7 @@ from django.views.generic.list import ListView
 
 from apps.gestiones.models import Empresa
 from apps.usuarios.models import Usuario
-from apps.usuarios.forms import UsuarioAdministradorForm, UsuarioForm, EstablecerContrasenaFrom
+from apps.usuarios.forms import UsuarioAdministradorForm, UsuarioForm, EstablecerContrasenaFrom, InvitarEmpleadoFrom
 
 
 class UsuarioAdministradorListView(ListView):
@@ -126,3 +126,30 @@ class UsuarioEmpleadoCreateView(CreateView):
     form_class = UsuarioForm
     template_name = 'usuarios/empleados/crear.html'
     success_url = reverse_lazy('usuarios:empleados.listar')
+
+
+class InvitarEmpleadoFormView(FormView):
+    template_name = 'usuarios/empleados/invitar.html'
+    form_class = InvitarEmpleadoFrom
+    success_url = reverse_lazy('core:core.home')
+
+
+class UsuarioEmpleadoRegistrarView(CreateView):
+    model = Usuario
+    form_class = UsuarioForm
+    template_name = 'usuarios/empleados/registrar.html'
+    success_url = reverse_lazy('core:core.home')
+
+    def get_success_url(self):
+        return reverse_lazy('usuarios:usuario.establecer_contrasena', args=[self.object.email])
+
+    def get_empresa(self):
+        empresa = self.kwargs.get('pk_empresa')
+        return Empresa.objects.filter(pk=empresa).first()
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        empresa = self.get_empresa()
+        if empresa:
+            kwargs['empresa'] = empresa
+        return kwargs
