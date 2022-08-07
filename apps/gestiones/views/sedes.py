@@ -10,7 +10,7 @@ class PuntoAccesoListView(ListView):
     model = PuntoAcceso
     context_object_name = 'puntos_acceso'
     template_name = 'gestiones/puntos_acceso/listar.html'
-    paginate_by = 10
+    paginate_by = 3
 
     def get_queryset(self):
         queryset = super().get_queryset()
