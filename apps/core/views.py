@@ -1,11 +1,15 @@
-from django.shortcuts import render
-
-# Create your views here.
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 
 
 class HomeTemplateView(TemplateView):
     template_name = 'core/home.html'
+
+    def get(self, request, *args, **kwargs):
+        if not self.request.user.is_superuser:
+            return HttpResponseRedirect(reverse_lazy('gestiones:sedes.listar'))
+        return super().get(request, *args, **kwargs)
 
 
 class IndexTemplateView(TemplateView):
