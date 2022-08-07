@@ -17,7 +17,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import path
 
 from apps.gestiones.views import EmpresaCreateView, EmpresaListView, PuntoAccesoCreateView, PuntoAccesoListView, EmpresaUpdateView, \
-    PuntoAccesoUpdateView, FranjaHorariaListView
+    PuntoAccesoUpdateView, FranjaHorariaListView, FranjaHorariaCreateView
 
 urlpatterns = [
     path('empresas/listar/', login_required(EmpresaListView.as_view()), name='empresas.listar'),
@@ -29,5 +29,5 @@ urlpatterns = [
     path('sedes/editar/<int:pk>/', login_required(PuntoAccesoUpdateView.as_view()), name='sedes.editar'),
 
     path('horario_acceso/listar/<int:pk_empleado>/', login_required(FranjaHorariaListView.as_view()), name='horario_acceso.listar'),
-    path('horario_acceso/crear/<int:pk_empleado>/', login_required(FranjaHorariaListView.as_view()), name='horario_acceso.crear'),
+    path('horario_acceso/crear/<int:pk_empleado>/', login_required(FranjaHorariaCreateView.as_view()), name='horario_acceso.crear'),
 ]

@@ -39,5 +39,4 @@ class EmpresaForm(forms.ModelForm):
         self.fields['email'].widget.attrs['class'] = 'form-control form-control-solid'
         self.fields['sitio_web'].widget.attrs['class'] = 'form-control form-control-solid'
 
-
         self.fields['administrador'].queryset = self.fields['administrador'].queryset.filter(empresa=get_current_user().empresa)
