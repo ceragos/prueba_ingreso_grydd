@@ -18,7 +18,7 @@ from django.urls import path
 
 from apps.usuarios.views import UsuarioAdministradorListView, UsuarioAdministradorCreateView, UsuarioEmpleadoListView, \
     UsuarioEmpleadoCreateView, ValidarInvitacionRedirectView, InvitacionInvalidaTemplateView, EstablecerContrasenaFormView, \
-    InvitarEmpleadoFormView, UsuarioEmpleadoRegistrarView
+    InvitarEmpleadoFormView, UsuarioEmpleadoRegistrarView, RegistroExitosoTemplateView
 
 urlpatterns = [
     path('usuario/establecer_contrasena/<str:email>/', EstablecerContrasenaFormView.as_view(), name='usuario.establecer_contrasena'),
@@ -38,4 +38,5 @@ urlpatterns = [
     path('empleados/crear/', login_required(UsuarioEmpleadoCreateView.as_view()), name='empleados.crear'),
     path('empleados/invitar/', login_required(InvitarEmpleadoFormView.as_view()), name='empleados.invitar'),
     path('empleados/registrar/<int:pk_empresa>/', UsuarioEmpleadoRegistrarView.as_view(), name='empleados.registrar'),
+    path('empleados/registro_exitoso/', RegistroExitosoTemplateView.as_view(), name='empleados.registro_exitoso'),
 ]

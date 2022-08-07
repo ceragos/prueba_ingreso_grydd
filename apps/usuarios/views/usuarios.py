@@ -1,7 +1,6 @@
 import jwt
-
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic.edit import FormView
@@ -71,7 +70,7 @@ class ValidarInvitacionRedirectView(RedirectView):
         usuario = Usuario.objects.filter(email=administrador).first()
         if not usuario.password:
             return reverse_lazy('usuarios:usuario.establecer_contrasena', args=[administrador])
-        return reverse_lazy('core:core.home')
+        raise Http404
 
 
 class InvitacionInvalidaTemplateView(TemplateView):
@@ -142,7 +141,7 @@ class UsuarioEmpleadoRegistrarView(CreateView):
     success_url = reverse_lazy('core:core.home')
 
     def get_success_url(self):
-        return reverse_lazy('usuarios:usuario.establecer_contrasena', args=[self.object.email])
+        return reverse_lazy('usuarios:empleados.registro_exitoso')
 
     def get_empresa(self):
         empresa = self.kwargs.get('pk_empresa')
@@ -154,3 +153,7 @@ class UsuarioEmpleadoRegistrarView(CreateView):
         if empresa:
             kwargs['empresa'] = empresa
         return kwargs
+
+
+class RegistroExitosoTemplateView(TemplateView):
+    template_name = 'usuarios/empleados/registro_exitoso.html'

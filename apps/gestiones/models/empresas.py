@@ -48,10 +48,7 @@ class Empresa(Geolocalizable, Audit):
     telefono = PhoneNumberField()
     email = models.EmailField(
         'Correo electrónico',
-        unique=True,
-        error_messages={
-            'unique': 'Ya existe un usuario con ese correo electrónico.'
-        }
+        unique=True
     )
     sitio_web = models.URLField(
         max_length=200,
@@ -99,4 +96,5 @@ def invitar_administrador(sender, **kwargs):
         recipient_list = [f'{instance.administrador.email}']
         send_mail(asunto, mensage, email_from, recipient_list, html_message=html_message)
     else:
-        Usuario.objects.filter(pk=instance.administrador.pk).update(empresa=instance)
+        if instance.administrador:
+            Usuario.objects.filter(pk=instance.administrador.pk).update(empresa=instance)
