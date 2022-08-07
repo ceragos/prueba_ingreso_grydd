@@ -14,8 +14,9 @@ class PuntoAccesoListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        empresa = self.request.user.empresa
-        queryset = queryset.filter(empresa=empresa)
+        if not self.request.user.is_superuser:
+            empresa = self.request.user.empresa
+            queryset = queryset.filter(empresa=empresa)
         return queryset
 
 

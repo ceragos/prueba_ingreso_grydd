@@ -1,5 +1,6 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from crum import get_current_user
 from django import forms
 
 from apps.gestiones.models import Empresa
@@ -37,3 +38,6 @@ class EmpresaForm(forms.ModelForm):
         self.fields['telefono'].widget.attrs['class'] = 'form-control form-control-solid'
         self.fields['email'].widget.attrs['class'] = 'form-control form-control-solid'
         self.fields['sitio_web'].widget.attrs['class'] = 'form-control form-control-solid'
+
+
+        self.fields['administrador'].queryset = self.fields['administrador'].queryset.filter(empresa=get_current_user().empresa)

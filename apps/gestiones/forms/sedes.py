@@ -3,7 +3,7 @@ from crispy_forms.layout import Submit
 from crum import get_current_user
 from django import forms
 
-from apps.gestiones.models import PuntoAcceso
+from apps.gestiones.models import PuntoAcceso, FranjaHoraria
 
 class PuntoAccesoForm(forms.ModelForm):
     
@@ -35,6 +35,8 @@ class PuntoAccesoForm(forms.ModelForm):
         self.fields['geolocalizacion'].widget.attrs['class'] = 'form-control form-control-solid'
         self.fields['horarios_acceso'].widget.attrs['class'] = 'form-control form-control-solid'
 
-        if not get_current_user().is_superuser:
-            self.initial['empresa'] = get_current_user().empresa
+        current_user = get_current_user()
+        self.fields['horarios_acceso'].queryset = self.fields['horarios_acceso'].queryset.filter(punto_acceso__empresa=current_user.empresa)
+        if not current_user.is_superuser:
+            self.initial['empresa'] = current_user.empresa
             self.fields['empresa'].widget = forms.HiddenInput()
