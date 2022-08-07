@@ -4,6 +4,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crum import get_current_user, get_current_request
 from django import forms
+from ipware import get_client_ip
 
 from apps.gestiones.models import PuntoAcceso, FranjaHoraria
 
@@ -48,6 +49,13 @@ class PuntoAccesoForm(forms.ModelForm):
         self.get_geolocalizacion()
 
     def get_geolocalizacion(self):
-        REMOTE_ADDR = get_current_request().META['REMOTE_ADDR']
-        logger.info(REMOTE_ADDR)
-        f'http://ip-api.com/json/{REMOTE_ADDR}'
+        request =get_current_request()
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        logger.info('request', ip, is_routable)
+        ip, is_routable = get_client_ip(request)
+        logger.info('ipware', ip, is_routable)
+        f'http://ip-api.com/json/{ip}'
