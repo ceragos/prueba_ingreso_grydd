@@ -7,6 +7,7 @@ class Pais(ParametroBaseModel, Audit):
     class Meta:
         verbose_name = 'País'
         verbose_name_plural = 'Paises'
+        ordering = ['id']
 
 
 class Estado(ParametroBaseModel, Audit):
@@ -20,6 +21,7 @@ class Estado(ParametroBaseModel, Audit):
     class Meta:
         verbose_name = 'Estado'
         verbose_name_plural = 'Estados'
+        ordering = ['id']
 
 
 class Ciudad(ParametroBaseModel, Audit):
@@ -33,3 +35,4 @@ class Ciudad(ParametroBaseModel, Audit):
     class Meta:
         verbose_name = 'Ciudad'
         verbose_name_plural = 'Ciudades'
+        ordering = ['id']
