@@ -1,9 +1,14 @@
+import logging
+
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crum import get_current_user, get_current_request
 from django import forms
 
 from apps.gestiones.models import PuntoAcceso, FranjaHoraria
+
+logger = logging.getLogger('GESTIONES')
+
 
 class PuntoAccesoForm(forms.ModelForm):
     
@@ -44,5 +49,5 @@ class PuntoAccesoForm(forms.ModelForm):
 
     def get_geolocalizacion(self):
         REMOTE_ADDR = get_current_request().META['REMOTE_ADDR']
-        print(REMOTE_ADDR)
+        logger.info(REMOTE_ADDR)
         f'http://ip-api.com/json/{REMOTE_ADDR}'
