@@ -21,25 +21,3 @@
         </div>
     </div>
 {% endblock %}
-
-{% block js %}
-<script>
-$(document).ready(function () {
-    if (!!navigator.geolocation) {
-        //Pedimos los datos de geolocalizacion al navegador
-        navigator.geolocation.getCurrentPosition(
-            //Si el navegador entrega los datos de geolocalizacion los imprimimos
-            function (position) {
-                geolocalizacion = $('#id_geolocalizacion').text(`[${position.coords.latitude}, ${position.coords.longitude}`])
-            },
-            //Si no los entrega manda un alerta de error
-            function () {
-                console.log("nav no permitido");
-            }
-        );
-    }
-
-});
-
-</script>
-{% endblock %}

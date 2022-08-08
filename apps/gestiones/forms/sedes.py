@@ -23,7 +23,7 @@ class PuntoAccesoForm(forms.ModelForm):
             'horarios_acceso',
         )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, point_map_center=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_id = 'id-empresaForm'
@@ -39,6 +39,9 @@ class PuntoAccesoForm(forms.ModelForm):
         self.fields['empresa'].widget.attrs['class'] = 'form-control form-control-solid'
         self.fields['geolocalizacion'].widget.attrs['class'] = 'form-control form-control-solid'
         self.fields['horarios_acceso'].widget.attrs['class'] = 'form-control form-control-solid'
+
+        if point_map_center:
+            self.initial['geolocalizacion'] = point_map_center
 
         current_user = get_current_user()
         self.fields['horarios_acceso'].queryset = self.fields['horarios_acceso'].queryset.filter(punto_acceso__empresa=current_user.empresa)

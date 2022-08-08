@@ -31,6 +31,13 @@ class PuntoAccesoCreateView(CreateView):
         context['accion'] = 'Crear'
         return context
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        point_map_center = self.request.GET.get('point_map_center')
+        if point_map_center:
+            kwargs['point_map_center'] = point_map_center
+        return kwargs
+
 
 class PuntoAccesoUpdateView(UpdateView):
     model = PuntoAcceso
