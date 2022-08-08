@@ -20,6 +20,8 @@ PostgreSQL
 * Configure el servidor de envio de correos smtp (opcional para configuración de producción, por defecto gmail) 
 ###
     `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`
+* Agregue el archivo `(grydd_project\logs\debug.log)`
+
 * Instalar python y agregarlo al path del sistema
 * Instalar virtualevn
 ###
