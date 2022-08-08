@@ -18,6 +18,9 @@ class EmpresaForm(forms.ModelForm):
             'telefono',
             'email',
             'sitio_web',
+            'pais',
+            'estado',
+            'ciudad',
         )
 
     def __init__(self, *args, **kwargs):
@@ -38,5 +41,8 @@ class EmpresaForm(forms.ModelForm):
         self.fields['telefono'].widget.attrs['class'] = 'form-control form-control-solid'
         self.fields['email'].widget.attrs['class'] = 'form-control form-control-solid'
         self.fields['sitio_web'].widget.attrs['class'] = 'form-control form-control-solid'
+        self.fields['pais'].widget.attrs['class'] = 'form-control form-control-solid'
+        self.fields['estado'].widget.attrs['class'] = 'form-control form-control-solid'
+        self.fields['ciudad'].widget.attrs['class'] = 'form-control form-control-solid'
 
         self.fields['administrador'].queryset = self.fields['administrador'].queryset.filter(empresa=get_current_user().empresa)
