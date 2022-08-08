@@ -21,6 +21,7 @@ class PuntoAccesoForm(forms.ModelForm):
             'empresa',
             'geolocalizacion',
             'horarios_acceso',
+            'is_active'
         )
 
     def __init__(self, point_map_center=None, *args, **kwargs):

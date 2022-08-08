@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.contrib.auth.decorators import login_required
 from django.urls import path
+from rest_framework import routers
 
 from apps.gestiones.views import EmpresaCreateView, EmpresaListView, PuntoAccesoCreateView, PuntoAccesoListView, EmpresaUpdateView, \
-    PuntoAccesoUpdateView, FranjaHorariaListView, FranjaHorariaCreateView, FranjaHorariaUpdateView
+    PuntoAccesoUpdateView, FranjaHorariaListView, FranjaHorariaCreateView, FranjaHorariaUpdateView, PuntoAccesoModelViewSet
+
+router = routers.DefaultRouter()
+router.register(r'puntos_acceso', PuntoAccesoModelViewSet, basename='puntos_acceso')
 
 urlpatterns = [
     path('empresas/listar/', login_required(EmpresaListView.as_view()), name='empresas.listar'),
@@ -31,4 +35,4 @@ urlpatterns = [
     path('horario_acceso/listar/<int:pk_empleado>/', login_required(FranjaHorariaListView.as_view()), name='horario_acceso.listar'),
     path('horario_acceso/crear/<int:pk_empleado>/', login_required(FranjaHorariaCreateView.as_view()), name='horario_acceso.crear'),
     path('horario_acceso/editar/<int:pk>/', login_required(FranjaHorariaUpdateView.as_view()), name='horario_acceso.editar'),
-]
+] + router.urls

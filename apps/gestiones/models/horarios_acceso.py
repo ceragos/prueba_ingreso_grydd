@@ -30,3 +30,6 @@ class FranjaHoraria(Audit):
     def __str__(self):
         empleado = f'{self.empleado.first_name} {self.empleado.last_name}'
         return f'{empleado}, {self.punto_acceso} ({self.hora_inicio} - {self.hora_finalizacion})'
+
+    def __repr__(self):
+        return f'{self.hora_inicio} - {self.hora_finalizacion}'
