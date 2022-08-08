@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'phonenumber_field',
     'import_export',
+    'rest_framework',
     'apps.usuarios',
     'apps.core',
     'apps.gestiones',

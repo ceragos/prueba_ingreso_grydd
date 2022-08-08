@@ -24,6 +24,7 @@ urlpatterns = [
     path('gestiones/', include(('apps.gestiones.urls', 'apps.gestiones'), namespace='gestiones')),
     path('usuarios/', include(('apps.usuarios.urls', 'apps.usuarios'), namespace='usuarios')),
     path('chaining/', include('smart_selects.urls')),
+    path('api-auth/', include('rest_framework.urls')),
 ]
 
 if settings.DEBUG:
