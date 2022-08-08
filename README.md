@@ -1,4 +1,4 @@
-# grydd
+# Grydd
 
 # Requerimientos
 Python 3 64bits
@@ -54,3 +54,11 @@ O también puede utilizar un intérprete de Python de su elección
 * Ejecute el servidor
 ###
     python manage.py runserver
+
+# IMPORTATE!
+
+En la geolocalización se presentan 2 conflictos.
+
+1. El sistema incluye una funcionalidad para obtener la ubicación del cliente, esta solo funciona por `https://`
+
+2. Para la detección del país, el estado y la ciudad de ubicación se uso un proveedor gratuito, por lo cual solo permite peticiones `http://`
