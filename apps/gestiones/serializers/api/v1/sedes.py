@@ -1,4 +1,9 @@
 from datetime import datetime
+from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.urls import reverse_lazy
 from rest_framework import serializers
 from rest_framework.serializers import ValidationError
 
@@ -29,9 +34,28 @@ class ValidarPermisoSerializer(serializers.Serializer):
         if not usuario:
             raise ValidationError(f'Email no válido \"{value}\": el empleado no existe.')
         return usuario
+
+    def send_email(self):
+        data = self.validated_data
+        empleado = data['email_empleado']
+        punto_acceso = data['punto_acceso']
+        ruta = reverse_lazy('usuarios:empleados.listar')
+        context = {
+            'empleado': str(empleado),
+            'nombre_sede': str(punto_acceso),
+            'enlace': f'{settings.DOMAIN_NAME}{ruta}'
+        }
+        asunto = f'Error de acceso sede {punto_acceso}'
+        html_message = render_to_string(
+            'gestiones/puntos_acceso/email_error.html',
+            context=context
+        )
+        mensage = strip_tags(html_message)
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = [punto_acceso.empresa.administrador.email]
+        send_mail(asunto, mensage, email_from, recipient_list, html_message=html_message)
     
     def to_representation(self, instance):
-        
         data = self.validated_data
         empleado = data['email_empleado']
         punto_acceso = data['punto_acceso']
@@ -40,6 +64,8 @@ class ValidarPermisoSerializer(serializers.Serializer):
         horarios_acceso = horarios_acceso.filter(empleado=empleado, hora_inicio__lte=hora_actual, hora_finalizacion__gte=hora_actual, is_active=True)
         
         acceso = bool(horarios_acceso) and punto_acceso.is_active
+        if not acceso:
+            self.send_email()
         data_punto_acceso = PuntoAccesoModelSerializer(punto_acceso)
         data = {
             'acceso': acceso,
