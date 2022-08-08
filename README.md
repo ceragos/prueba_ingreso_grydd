@@ -6,11 +6,20 @@ Python 3 64bits
 PostgreSQL
 
 # Instrucciones
+* Agregue el archivo `(grydd_project/.env)` y cargue sus varaibles de entorno
+###
+    `SECRET_KEY`, `DOMAIN_NAME`
 * Ejecute la consola de window `CMD`
 * Crear en postgreSQL una base de datos llamada "grydd" (opcional para configuración de producción)
 ###
     create database grydd;
 * Configurar los datos de conexión a la base de datos (name, user, y password) en la ruta `(grydd_project/.env)`
+###
+    `NAME_DB`, `USER_DB`, `PASSWORD_DB`, `HOST_DB`, `PORT_DB`
+
+* Configure el servidor de envio de correos smtp (opcional para configuración de producción, por defecto gmail) 
+###
+    `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`
 * Instalar python y agregarlo al path del sistema
 * Instalar virtualevn
 ###
