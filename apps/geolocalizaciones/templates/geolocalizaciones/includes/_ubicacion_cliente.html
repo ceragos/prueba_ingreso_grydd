@@ -1,0 +1,41 @@
+<script>
+    function limpiar_coordenadas(latLng){
+        return latLng.replace('[', '').replace(']', '').replace(' ', '')
+    }
+
+    function dragend(){
+        const geolocalizacion = document.getElementById('id_geolocalizacion')
+        const loading = document.getElementById('loading')
+        const pais_estado_ciudad = document.getElementById('id_pais_estado_ciudad')
+
+        let coordenadas = limpiar_coordenadas(geolocalizacion.value)
+        console.log(coordenadas)
+        let positionstack_url = `http://api.positionstack.com/v1/reverse?access_key=5f7aa0722173762aca4eda8426e1fd5d&query=${coordenadas}`
+        console.log(positionstack_url)
+        
+        loading.className += "loading";
+        fetch(positionstack_url)
+        .then(response => {
+            if(response.ok) {
+                return response.json()
+            }
+            
+            throw new Error('Algo salió mal.');
+        })
+        .then(data => {
+            if (data['data']) {
+                pais_estado_ciudad.value = `${data['data'][0]['country']}, ${data['data'][0]['region']}, ${data['data'][0]['county']}`
+            } else {
+                alert('Lo sentimos no se obtuvieron datos en la solicitud, arrastre el marcador para intentar de nuevo.')
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            alert('Ah ocurrido un error, arrastre el marcador para intentar de nuevo.')
+        })
+        .finally(() => {
+            loading.classList.remove("loading");
+        });
+    }
+
+</script>

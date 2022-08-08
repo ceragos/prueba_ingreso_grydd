@@ -1,0 +1,13 @@
+<script>
+    if (!!navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                lat = position.coords.latitude
+                lng = position.coords.longitude
+                point_map_center = `[${lat}, ${lng}]`
+                link_crear_sede = $('#link_crear')
+                link_crear_sede.attr("href", link_crear_sede.attr("href") + `?point_map_center=${point_map_center}`)
+            }
+        );
+    }
+</script>

@@ -9,7 +9,7 @@
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800 d-inline">Empresas</h1>
         {% comment %} {% if perms.bodega.add_herramienta %} {% endcomment %}
-        <a href="{% url 'gestiones:empresas.crear' %}" class="btn btn-primary btn-icon-split mb-2 ml-2">
+        <a id="link_crear" href="{% url 'gestiones:empresas.crear' %}" class="btn btn-primary btn-icon-split mb-2 ml-2">
             <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
             </span>
@@ -135,4 +135,6 @@
     <!-- Page level custom scripts -->
     <script src="{% static 'core/assets/js/demo/datatables-demo.js' %}"></script>
     <script src="{% static 'core/assets/js/datatables.js' %}"></script>
+
+    {% include 'geolocalizaciones/includes/_coordenadas_cliente.html' %}
 {% endblock %}

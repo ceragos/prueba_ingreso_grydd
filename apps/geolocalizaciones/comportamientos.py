@@ -9,6 +9,7 @@ class Geolocalizable(models.Model):
     pais = models.ForeignKey(
         Pais,
         null=True,
+        blank=True,
         verbose_name='País',
         related_name='%(class)ss_pais',
         on_delete=models.PROTECT
@@ -16,6 +17,7 @@ class Geolocalizable(models.Model):
     estado = ChainedForeignKey(
         Estado,
         null=True,
+        blank=True,
         chained_field="pais",
         chained_model_field="pais",
         show_all=False,
@@ -26,12 +28,19 @@ class Geolocalizable(models.Model):
     ciudad = ChainedForeignKey(
         Ciudad,
         null=True,
+        blank=True,
         chained_field="estado",
         chained_model_field="estado",
         show_all=False,
         auto_choose=True,
         sort=True,
         related_name='%(class)ss_ciudad'
+    )
+    pais_estado_ciudad = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name='País, estado, ciudad'
     )
 
     class Meta:

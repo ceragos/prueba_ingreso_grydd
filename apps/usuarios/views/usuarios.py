@@ -36,6 +36,9 @@ class UsuarioAdministradorCreateView(CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
+        point_map_center = self.request.GET.get('point_map_center')
+        if point_map_center:
+            kwargs['point_map_center'] = point_map_center
         empresa = self.get_empresa()
         if empresa:
             kwargs['empresa'] = empresa
@@ -126,6 +129,13 @@ class UsuarioEmpleadoCreateView(CreateView):
     form_class = UsuarioForm
     template_name = 'usuarios/empleados/crear.html'
     success_url = reverse_lazy('usuarios:empleados.listar')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        point_map_center = self.request.GET.get('point_map_center')
+        if point_map_center:
+            kwargs['point_map_center'] = point_map_center
+        return kwargs
 
 
 class InvitarEmpleadoFormView(FormView):

@@ -46,6 +46,7 @@ class PuntoAccesoForm(forms.ModelForm):
 
         current_user = get_current_user()
         self.fields['horarios_acceso'].queryset = self.fields['horarios_acceso'].queryset.filter(punto_acceso__empresa=current_user.empresa)
+        
         if not current_user.is_superuser:
             self.initial['empresa'] = current_user.empresa
             self.fields['empresa'].widget = forms.HiddenInput()

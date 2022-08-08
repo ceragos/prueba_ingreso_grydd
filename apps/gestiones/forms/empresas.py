@@ -1,11 +1,14 @@
+from cProfile import label
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crum import get_current_user
 from django import forms
+from geolocation_fields.forms import fields
 
 from apps.gestiones.models import Empresa
 
 class EmpresaForm(forms.ModelForm):
+    geolocalizacion = fields.PointField(label='Geolocalización')
     
     class Meta:
         model = Empresa
@@ -21,9 +24,11 @@ class EmpresaForm(forms.ModelForm):
             'pais',
             'estado',
             'ciudad',
+            'geolocalizacion',
+            'pais_estado_ciudad'
         )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, point_map_center=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_id = 'id-empresaForm'
@@ -44,5 +49,10 @@ class EmpresaForm(forms.ModelForm):
         self.fields['pais'].widget.attrs['class'] = 'form-control form-control-solid'
         self.fields['estado'].widget.attrs['class'] = 'form-control form-control-solid'
         self.fields['ciudad'].widget.attrs['class'] = 'form-control form-control-solid'
+        self.fields['geolocalizacion'].widget.attrs['class'] = 'form-control form-control-solid'
+        self.fields['pais_estado_ciudad'].widget.attrs['class'] = 'form-control form-control-solid'
 
         self.fields['administrador'].queryset = self.fields['administrador'].queryset.filter(empresa=get_current_user().empresa)
+
+        if point_map_center:
+            self.initial['geolocalizacion'] = point_map_center

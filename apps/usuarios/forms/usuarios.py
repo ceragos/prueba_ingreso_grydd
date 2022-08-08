@@ -1,4 +1,3 @@
-import email
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crum import get_current_user
@@ -10,13 +9,15 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.html import strip_tags
-from apps.gestiones.models.empresas import Empresa
+from geolocation_fields.forms import fields
 
+from apps.gestiones.models.empresas import Empresa
 from apps.usuarios.models import Usuario
 
 
 class UsuarioForm(forms.ModelForm):
-    
+    geolocalizacion = fields.PointField(label='Geolocalización')
+
     class Meta:
         model = Usuario
         fields = (
@@ -28,10 +29,12 @@ class UsuarioForm(forms.ModelForm):
             'email',
             'pais',
             'estado',
-            'ciudad'
+            'ciudad',
+            'geolocalizacion',
+            'pais_estado_ciudad'
         )
 
-    def __init__(self, empresa=None, *args, **kwargs):
+    def __init__(self, empresa=None, point_map_center=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_id = 'id-empresaForm'
@@ -50,10 +53,13 @@ class UsuarioForm(forms.ModelForm):
         self.fields['pais'].widget.attrs['class'] = 'form-control form-control-solid'
         self.fields['estado'].widget.attrs['class'] = 'form-control form-control-solid'
         self.fields['ciudad'].widget.attrs['class'] = 'form-control form-control-solid'
+        self.fields['pais_estado_ciudad'].widget.attrs['class'] = 'form-control form-control-solid'
 
         if empresa:
             self.initial['empresa'] = empresa
             self.fields['empresa'].widget = forms.HiddenInput()
+        if point_map_center:
+            self.initial['geolocalizacion'] = point_map_center
 
 
 class UsuarioAdministradorForm(UsuarioForm):
